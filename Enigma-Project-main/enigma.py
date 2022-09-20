@@ -82,11 +82,13 @@ def pass_etw(input):
     return SETTINGS["ETW"][ord(input) - ord('A')]
 
 # Wheels
-def pass_wheels(input, reverse = False):
-    # Implement Wheel Logics
-    # Keep in mind that reflected signals pass wheels in reverse order
-    #if reverse :
-    #    SETTINGS["ETW"] = UKW["A"]
+def pass_wheels(input, reverse = False): # 로터 통과
+    if reverse :
+        for wheels in reversed(SETTINGS["WHEELS"]):
+            input = wheels["wire"][ord(input) - ord('A')]
+    else :
+        for wheels in SETTINGS["WHEELS"]:
+            input = wheels["wire"][ord(input) - ord('A')]
     return input
 
 # UKW
@@ -94,12 +96,11 @@ def pass_ukw(input):
     return SETTINGS["UKW"][ord(input) - ord('A')]
 
 # Wheel Rotation
-def rotate_wheels():
+def rotate_wheels(): # 초기 세팅값 설정
     # Implement Wheel Rotation Logics
-    for wheelpos in SETTINGS["WHEEL_POS"]
-        
-
-    SETTINGS["WHEEL_POS"]
+    #for wheels in SETTINGS["WHEEL_POS"]:
+    #    SETTINGS["WHEELS"][wheels]
+    print(SETTINGS["WHEEL_POS"])
     pass
 
 # Enigma Exec Start
@@ -117,15 +118,10 @@ for ch in plaintext:
     encoded_ch = ch
 
     encoded_ch = pass_plugboard(encoded_ch) # plugboard에 있는 쌍이면 변경
-    #print(encoded_ch, end='')
     encoded_ch = pass_etw(encoded_ch)
-    #print(encoded_ch, end='')
     encoded_ch = pass_wheels(encoded_ch)
-    #print(encoded_ch, end='')
     encoded_ch = pass_ukw(encoded_ch)
-    #print(encoded_ch, end='')
     encoded_ch = pass_wheels(encoded_ch, reverse = True)
-    #print(encoded_ch, end='')
     encoded_ch = pass_plugboard(encoded_ch) # plugboard에 있는 쌍이면 변경
     
     print(encoded_ch, end='')
