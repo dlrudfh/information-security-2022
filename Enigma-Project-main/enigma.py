@@ -116,9 +116,10 @@ wheel_pos_select = input("Set Wheel Position L->R (A~Z): ")
 plugboard_setup = input("Plugboard Setup: ")
 
 apply_settings(ukw_select, wheel_select, wheel_pos_select, plugboard_setup)
-rotate_wheels()
 
 for ch in plaintext:
+
+    rotate_wheels()
     encoded_ch = ch
 
     encoded_ch = pass_plugboard(encoded_ch) # plugboard에 있는 쌍이면 변경
