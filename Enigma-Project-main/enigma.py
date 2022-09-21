@@ -98,9 +98,14 @@ def pass_ukw(input):
 # Wheel Rotation
 def rotate_wheels(): # 초기 세팅값 설정
     # Implement Wheel Rotation Logics
-    #for wheels in SETTINGS["WHEEL_POS"]:
-    #    SETTINGS["WHEELS"][wheels]
-    print(SETTINGS["WHEEL_POS"])
+    counter = 0
+    for wheel_pos in SETTINGS["WHEEL_POS"]:
+        if wheel_pos != 0:
+            a = SETTINGS["WHEELS"][counter]["wire"][:wheel_pos] #rotate앞부분
+            b = SETTINGS["WHEELS"][counter]["wire"][wheel_pos:] # rotate뒷부분
+            SETTINGS["WHEELS"][counter]["wire"] = b + a
+        counter = counter + 1
+        
     pass
 
 # Enigma Exec Start
@@ -111,10 +116,9 @@ wheel_pos_select = input("Set Wheel Position L->R (A~Z): ")
 plugboard_setup = input("Plugboard Setup: ")
 
 apply_settings(ukw_select, wheel_select, wheel_pos_select, plugboard_setup)
+rotate_wheels()
 
 for ch in plaintext:
-    rotate_wheels()
-
     encoded_ch = ch
 
     encoded_ch = pass_plugboard(encoded_ch) # plugboard에 있는 쌍이면 변경
