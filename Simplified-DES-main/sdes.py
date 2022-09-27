@@ -118,8 +118,11 @@ mode determines that this function do encryption or decryption.
 '''
 def sdes(text: bitarray, key: bitarray, mode) -> bitarray:
     result = bitarray()
-    
-    #K1, K2 만드는 과정
+    keyarr = schedule_keys(key)
+    K1 = keyarr[0]
+    K2 = keyarr[1]
+
+    '''##############키 생성##############
     #P10으로 치환
     n = 0
     P10key = bitarray(10)
@@ -147,7 +150,58 @@ def sdes(text: bitarray, key: bitarray, mode) -> bitarray:
     K2 = bitarray(8)
     for i in P8:
         K2[n] = LS2[i]
+        n = n + 1'''
+
+    ############평문 암호화############
+    #IP로 치환
+    n = 0
+    text2 = bitarray(8)
+    for i in IP:
+        text2[n] = text[i]
         n = n + 1
+
+    #반으로 나눔
+    L = text2[:4]
+    R = text2[4:]
+    '''
+    #E/P로 확장
+    n = 0
+    R2 = bitarray(8)
+    for i in EP:
+        R2[n] = R[i]
+        n = n + 1
+
+    #xor연산 후 Sbox와 연산
+    R2 = K1^R2
+ 
+    SL = bitarray(bin(S0[R2[0] + R2[3]][R2[1] + R2[2]])[2:])
+    SR = bitarray(bin(S1[R2[4] + R2[7]][R2[5] + R2[6]])[2:])
+    S = SL + SR
+    #P4로 치환
+    n = 0
+    R3 = bitarray(4)
+    for i in P4:
+        R3[n] = S[i]
+        n = n + 1
+    
+    #L과 xor 후 R과 합침
+    Switch = R3^L
+    Switch = Switch + R
+    '''
+    switch = (L^round(R, K1)) + R
+    print(switch)
+
+
+
+    
+
+
+
+
+
+
+
+
 
 
 
