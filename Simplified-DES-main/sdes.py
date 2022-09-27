@@ -119,8 +119,39 @@ mode determines that this function do encryption or decryption.
 def sdes(text: bitarray, key: bitarray, mode) -> bitarray:
     result = bitarray()
     
-    # Place your own implementation of S-DES Here
-    
+    #K1, K2 만드는 과정
+    #P10으로 치환
+    n = 0
+    P10key = bitarray(10)
+    for i in P10: 
+        P10key[n] = key[i]
+        n = n + 1
+
+    #left shift 1
+    LS11 = P10key[1:5] + P10key[0:1]
+    LS12 = P10key[6:] + P10key[5:6]
+    LS1 = LS11 + LS12
+    #P8로 치환해서 K1 생성
+    n = 0
+    K1 = bitarray(8) 
+    for i in P8:
+        K1[n] = LS1[i]
+        n = n + 1
+
+    #left shift 2
+    LS21 = LS11[2:5] + LS11[0:2]
+    LS22 = LS12[2:5] + LS12[0:2]
+    LS2 = LS21 + LS22
+    #P8로 치환해서 K2 생성
+    n = 0
+    K2 = bitarray(8)
+    for i in P8:
+        K2[n] = LS2[i]
+        n = n + 1
+
+
+
+
     return result
 
 #### DES Sample Program Start
