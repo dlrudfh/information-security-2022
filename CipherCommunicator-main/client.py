@@ -20,8 +20,7 @@ class Receiver(Thread):
 
     def decrypt(self, ciphertext:bytes) -> bytes:
         cipher =  AES.new(ENCRYPTION_KEY, AES.MODE_ECB)
-        text = cipher.decrypt(self)
-        return unpad(text, BLOCK_SIZE)
+        return unpad(cipher.decrypt(ciphertext), BLOCK_SIZE)
 
     def handle_recv(self, received:bytes):
         try:
