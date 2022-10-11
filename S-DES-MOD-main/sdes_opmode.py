@@ -148,10 +148,22 @@ def sdes(text: bitarray, key: bitarray, mode) -> bitarray:
 
 
 def sdes_encrypt_ecb(text: bitarray, key: bitarray):
-    pass
+    result = bitarray()
+    str = bitarray()
+    for i in range(int(len(text)/8)):
+        str = text[i*8:(i+1)*8]
+        for l in sdes(str, key , MODE_ENCRYPT):
+            result.append(l)
+    return result
 
 def sdes_decrypt_ecb(ciphertext: bitarray, key: bitarray):
-    pass
+    result = bitarray()
+    str = bitarray()
+    for i in range(int(len(ciphertext)/8)):
+        str = ciphertext[i*8:(i+1)*8]
+        for l in sdes(str, key , MODE_DECRYPT):
+            result.append(l)
+    return result
 
 def sdes_encrypt_cbc(text: bitarray, key: bitarray, iv:bitarray):
     pass
